@@ -14,14 +14,14 @@ public class App  {
     public static String getInput(
         Scanner scanner, 
         String name, 
-        String regex
+        String pattern
     ){
         String result;
 
         do {
             System.out.print(name);
             result = scanner.next();
-        } while(!result.matches(regex));
+        } while(!result.matches(pattern));
 
         return result;
     }
@@ -70,8 +70,8 @@ public class App  {
                     String.format("[ %s ] Roll Again(Y/N)?",
                     playerName,
                     index + 1
-                ),"^([Yy]|[Nn])$").equalsIgnoreCase(("y"))
-            );
+                ),"^(Y|N)$").equals("Y"))
+            ;
 
             return sum;
         }
@@ -102,7 +102,7 @@ public class App  {
                 System.out.print("[ Computer] Roll Again(Y/N)?");
                 isBotAnswer = isRollYN();
 
-                System.out.println(isBotAnswer ? "y":"n");
+                System.out.println(isBotAnswer ? "Y":"N");
 
             } while(isBotAnswer);
 
