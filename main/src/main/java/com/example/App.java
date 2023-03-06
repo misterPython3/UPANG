@@ -112,7 +112,7 @@ public class App  {
             return sum;
         }
         public void gameInit(int players){
-            if(players == 0)return;
+            if(players < 2)return;
             int index;
             board = new int[players];
             System.out.println(WELCOME_TEXT);
