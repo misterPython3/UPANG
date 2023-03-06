@@ -20,19 +20,22 @@ public class App  {
 
         do {
             System.out.print(name);
-            result = scanner.next();
+            result = scanner.nextLine();
         } while(!result.matches(pattern));
 
         return result;
     }
 
     public static class Pig {
+        private static final String
+        WELCOME_TEXT = "Hello! Welcome to the Pig Game!",
+        GOODBYE_TEXT = "Goodbye.\n";
+        
         // MARK - `botRandom` have separate instance to have its own seed
         private Random random, botRandom;
         private Scanner scanner;
         private boolean isOver;
         private int[] board;
-
         public Pig() {
             random = new Random(); 
             botRandom = new Random(); 
@@ -80,7 +83,7 @@ public class App  {
             return botRandom.nextInt(128) % 2==0;
         }
 
-        public int botTurn(int index) {
+        private int botTurn(int index) {
             int sum = 0, rollValue;
             boolean isBotAnswer;
 
@@ -108,81 +111,93 @@ public class App  {
 
             return sum;
         }
-
         public void gameInit(int players){
-            board = new int[players];
-            isOver = false;
+            if(players == 0)return;
             int index;
-            if(
+            board = new int[players];
+            System.out.println(WELCOME_TEXT);
+            while(
                 getInput(
                     scanner, 
                     "Do you want to start a new game? (Y/N):",
                      "(Y|N)")
-                        .equals("N")
-                     ) return;
-            do{
-                for(index=0; index< players && !isOver; index++){
-                    System.out.printf("===== [ Player %d's turn ] =====\n", index + 1);
-                    board[index] += turn(
-                        index, 
-                        String.format("Player %d", 
-                        index + 1)
-                    );
+                        .equals("Y")
+                     ){
+                System.out.println();
+                isOver = false;
+                do{
+                    for(index=0; index < players && !isOver; index++){
+                        System.out.printf("===== [ Player %d's turn ] =====\n", index + 1);
+                        board[index] += turn(
+                            index, 
+                            String.format("Player %d", 
+                            index + 1)
+                        );
 
-                    System.out.printf("===== [ End Turn of Player %d ] =====\n", index + 1);
-                    System.out.printf(
-                        "Player %d has %d point[s] on their board.\n", 
-                        index + 1, 
-                        board[index]
-                    );
-                    System.out.println();
-                }
-            } while(!isOver);
+                        System.out.printf("===== [ End Turn of Player %d ] =====\n", index + 1);
+                        System.out.printf(
+                            "Player %d has %d point[s] on their board.\n", 
+                            index + 1, 
+                            board[index]
+                        );
+                        System.out.println();
+                    }
+                } while(!isOver);
 
-            System.out.printf("Player %d Won the Pig Game\n", index);
+                System.out.printf("Player %d Won the Pig Game\n\n", index);
+                for(index=0; index < players; index++) board[index] = 0;
+            }
+            System.out.println();
+            System.out.println(GOODBYE_TEXT);
         }
 
         public void botGameInit(){
-            board = new int[2];
-            isOver = false;
             int sum;
-            if(
+            board = new int[2];
+            System.out.println(WELCOME_TEXT);
+            while(
                 getInput(
-                    scanner,
-                "Do you want to start a new game? (Y/N):",
-                    "(Y|N)")
-                        .equals("N")
-            ) return;
-            for(;;){
-                System.out.println("---- YOUR TURN ----");
-                board[0] += sum = turn(0,"Player");
+                    scanner, 
+                    "Do you want to start a new game? (Y/N):",
+                     "(Y|N)")
+                        .equals("Y")
+                    ){
+                System.out.println();
+                isOver = false;
+                for(;;){
+                    System.out.println("---- YOUR TURN ----");
+                    board[0] += sum = turn(0,"Player");
 
-                System.out.printf(
-                    "Turn ended. You earned %d points, total points %d.\n\n",
-                    sum,
-                    board[0]
-                );
+                    System.out.printf(
+                        "Turn ended. You earned %d points\n\n",
+                        sum
+                    );
 
-                if(isOver){
-                    System.out.println("You Won with "+board[0]+" points");
-                    break;
+                    if(isOver){
+                        System.out.println("You Won with "+board[0]+" points");
+                        break;
+                    }
+
+                    System.out.println("---- COMPUTER'S TURN ----");
+                    board[1] += sum = botTurn(1);
+                    
+                    System.out.printf(
+                        "Turn ended. Computer earned %d points\n\n",
+                        sum
+                    );
+
+                    if(isOver){
+                        System.out.println("Computer Won"+board[1]+" points");
+                        break;
+                    }
                 }
-
-                System.out.println("---- COMPUTER'S TURN ----");
-                board[1] += sum = botTurn(1);
-                
-                System.out.printf(
-                    "Turn ended. Computer earned %d points, total points %d.\n\n",
-                    sum,
-                    board[1]
-                );
-
-                if(isOver){
-                    System.out.println("Computer Won"+board[1]+" points");
-                    break;
-                }
+                System.out.println();
+                board[0] = board[1] = 0;
             }
+            System.out.println();
+            System.out.println(GOODBYE_TEXT);
         }
+
     }
 
 }
