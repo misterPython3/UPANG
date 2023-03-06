@@ -8,7 +8,7 @@ public class App  {
     // MARK - This would be always be here.
     public static void main(String[] args) {
         Pig game = new Pig();
-        game.gameInit(2);
+        game.botGameInit();
     }
 
     public static String getInput(
