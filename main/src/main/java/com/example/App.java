@@ -102,7 +102,7 @@ public class App  {
                 System.out.print("[ Computer] Roll Again(Y/N)?");
                 isBotAnswer = isRollYN();
 
-                System.out.println(isBotAnswer?"y":"n");
+                System.out.println(isBotAnswer ? "y":"n");
 
             } while(isBotAnswer);
 
@@ -117,7 +117,12 @@ public class App  {
             do{
                 for(index=0; index< players && !isOver; index++){
                     System.out.printf("===== [ Player %d's turn ] =====\n", index + 1);
-                    board[index] += turn(index, String.format("Player %d", index + 1));
+                    board[index] += turn(
+                        index, 
+                        String.format("Player %d", 
+                        index + 1)
+                    );
+
                     System.out.printf("===== [ End Turn of Player %d ] =====\n", index + 1);
                     System.out.printf(
                         "Player %d has %d point[s] on their board.\n", 
@@ -138,9 +143,13 @@ public class App  {
 
             for(;;){
                 System.out.println("---- YOUR TURN ----");
-                board[0] += sum=turn(0,"Player");
+                board[0] += sum = turn(0,"Player");
 
-                System.out.printf("Turn ended. You earned %d points, total points %d.\n\n",sum,board[0]);
+                System.out.printf(
+                    "Turn ended. You earned %d points, total points %d.\n\n",
+                    sum,
+                    board[0]
+                );
 
                 if(isOver){
                     System.out.println("You Won with "+board[0]+" points");
@@ -148,9 +157,13 @@ public class App  {
                 }
 
                 System.out.println("---- COMPUTER'S TURN ----");
-                board[1] += sum=botTurn(1);
+                board[1] += sum = botTurn(1);
                 
-                System.out.printf("Turn ended. Computer earned %d points, total points %d.\n\n",sum,board[1]);
+                System.out.printf(
+                    "Turn ended. Computer earned %d points, total points %d.\n\n",
+                    sum,
+                    board[1]
+                );
 
                 if(isOver){
                     System.out.println("Computer Won"+board[1]+" points");
@@ -159,5 +172,5 @@ public class App  {
             }
         }
     }
-    
+
 }
