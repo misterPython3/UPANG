@@ -70,7 +70,7 @@ public class App  {
                     String.format("[ %s ] Roll Again(Y/N)?",
                     playerName,
                     index + 1
-                ),"^(Y|N)$").equals("Y"))
+                ),"Y|N").equals("Y"))
             ;
 
             return sum;
