@@ -23,7 +23,7 @@ public class App
             sc = new Scanner(System.in);
         }
         public int roll(){
-            return rand.nextInt(6)+1;
+            return rand.nextInt(6)+1; // generates random int 1 <= x <= 6
         }
         public int turn(int index,String player_name){
             int sum = 0, rollValue;
