@@ -8,7 +8,7 @@ public class App  {
     // MARK - This would be always be here.
     public static void main(String[] args) {
         Pig game = new Pig();
-        game.botGameInit();
+        game.gameInit(2);
     }
 
     public static String getInput(
@@ -67,7 +67,7 @@ public class App  {
             } while(
                 getInput(
                     scanner,
-                    String.format("[ %s ] Roll Again(Y/N)?",
+                    String.format("[ %s ] Keep Going? (Y/N):",
                     playerName,
                     index + 1
                 ),"Y|N").equals("Y"))
@@ -99,7 +99,7 @@ public class App  {
                     break;
                 }
 
-                System.out.print("[ Computer] Roll Again(Y/N)?");
+                System.out.print("[ Computer ] Keep Going? (Y/N):");
                 isBotAnswer = isRollYN();
 
                 System.out.println(isBotAnswer ? "Y":"N");
@@ -113,7 +113,13 @@ public class App  {
             board = new int[players];
             isOver = false;
             int index;
-
+            if(
+                getInput(
+                    scanner, 
+                    "Do you want to start a new game? (Y/N):",
+                     "(Y|N)")
+                        .equals("N")
+                     ) return;
             do{
                 for(index=0; index< players && !isOver; index++){
                     System.out.printf("===== [ Player %d's turn ] =====\n", index + 1);
@@ -140,7 +146,13 @@ public class App  {
             board = new int[2];
             isOver = false;
             int sum;
-
+            if(
+                getInput(
+                    scanner,
+                "Do you want to start a new game? (Y/N):",
+                    "(Y|N)")
+                        .equals("N")
+            ) return;
             for(;;){
                 System.out.println("---- YOUR TURN ----");
                 board[0] += sum = turn(0,"Player");
